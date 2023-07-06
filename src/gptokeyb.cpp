@@ -56,6 +56,7 @@ bool config_mode = false;
 bool hotkey_override = false;
 bool emuelec_override = false;
 char* hotkey_code;
+int joystick_index = 0;
 
 GptokeybConfig config;
 GptokeybState state;
@@ -215,8 +216,11 @@ int main(int argc, char* argv[])
                     app_exult_adjust = true;
                 }
             }
-            
-        } 
+        } else if ((strcmp(argv[ii], "-joystick") == 0)) {
+            if (ii + 1 < argc) { 
+                joystick_index = atoi(argv[++ii]);
+            }
+        }
     }
 
     // Add textinput_interactive mode, check for extra options via environment variable if available

@@ -140,4 +140,6 @@ extern bool character_set_shift[];          // indicate which keys require shift
 extern int current_character; 
 extern int current_key[];                   // current key selected for each key
 
+extern int joystick_index;                  // joystick index for player 1, default 0
+
 #endif /* __GPTOKEYB_H__ */
