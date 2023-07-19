@@ -18,21 +18,21 @@
 * Authored by: Kris Henriksen <krishenriksen.work@gmail.com>
 #
 * AnberPorts-Keyboard-Mouse
-* 
+*
 * Part of the code is from from https://github.com/krishenriksen/AnberPorts/blob/master/AnberPorts-Keyboard-Mouse/main.c (mostly the fake keyboard)
 * Fake Xbox code from: https://github.com/Emanem/js2xbox
-* 
+*
 * Modified (badly) by: Shanti Gilbert for EmuELEC
 * Modified further by: Nikolai Wuttke for EmuELEC (Added support for SDL and the SDLGameControllerdb.txt)
 * Modified further by: Jacob Smith
-* 
+*
 * Any help improving this code would be greatly appreciated! 
-* 
+*
 * DONE: Xbox360 mode: Fix triggers so that they report from 0 to 255 like real Xbox triggers
 *       Xbox360 mode: Figure out why the axis are not correctly labeled?  SDL_CONTROLLER_AXIS_RIGHTX / SDL_CONTROLLER_AXIS_RIGHTY / SDL_CONTROLLER_AXIS_TRIGGERLEFT / SDL_CONTROLLER_AXIS_TRIGGERRIGHT
 *       Keyboard mode: Add a config file option to load mappings from.
 *       add L2/R2 triggers
-* 
+*
 */
 
 #include "gptokeyb.h"
@@ -45,7 +45,7 @@ bool sudo_kill = false; //allow sudo kill instead of killall for non-emuelec sys
 bool pckill_mode = false; //emit alt+f4 to close apps on pc during kill mode, if env variable is set
 bool openbor_mode = false;
 bool xbox360_mode = false;
-bool textinputpreset_mode = false; 
+bool textinputpreset_mode = false;
 bool textinputinteractive_mode = false;
 bool textinputinteractive_noautocapitals = false;
 bool textinputinteractive_extrasymbols = false;
@@ -80,17 +80,17 @@ void processKeys()
     char lowerchar;
     char upperchar;
     bool uppercase = false;
-    for (int ii = 0; ii < lenText; ii++) {  
+    for (int ii = 0; ii < lenText; ii++) {
         if (config.text_input_preset[ii] != '\0') {
-            memcpy( str, &config.text_input_preset[ii], 1 );        
+            memcpy( str, &config.text_input_preset[ii], 1 );
             str[1] = '\0';
 
             lowerchar = std::tolower(config.text_input_preset[ii], std::locale());
             upperchar = std::toupper(config.text_input_preset[ii], std::locale());
 
-            memcpy( upperstr, &upperchar, 1 );        
+            memcpy( upperstr, &upperchar, 1 );
             upperstr[1] = '\0';
-            memcpy( lowerstr, &lowerchar, 1 );        
+            memcpy( lowerstr, &lowerchar, 1 );
             lowerstr[1] = '\0';
             uppercase = (strcmp(upperstr,str) == 0);
 
@@ -112,7 +112,7 @@ void processKeys()
                     code = KEY_COMMA;
                     uppercase = false;
             }
-            
+
             emitTextInputKey(code, uppercase);
         } // if valid character
     } //for
@@ -121,9 +121,9 @@ void processKeys()
 Uint32 repeatKeyCallback(Uint32 interval, void *param)
 {
         //timerCallback requires pointer parameter, but passing pointer to key_code for analog sticks doesn't work
-        int key_code = *reinterpret_cast<int*>(param); 
+        int key_code = *reinterpret_cast<int*>(param);
         emitKey(key_code, false);
-        emitKey(key_code, true); 
+        emitKey(key_code, true);
         interval = config.key_repeat_interval; // key repeats according to repeat interval; initial interval is set to delay
         return(interval);
 }
@@ -183,14 +183,14 @@ int main(int argc, char* argv[])
     }
 
     for( int ii = 1; ii < argc; ii++ )
-    {      
+    {
         if (strcmp(argv[ii], "xbox360") == 0) {
             xbox360_mode = true;
         } else if (strcmp(argv[ii], "textinput") == 0) {
             textinputinteractive_mode = true;
             state.textinputinteractive_mode_active = false;
         } else if (strcmp(argv[ii], "-c") == 0) {
-            if (ii + 1 < argc) { 
+            if (ii + 1 < argc) {
                 config_mode = true;
                 config_file = argv[++ii];
             } else {
@@ -203,12 +203,12 @@ int main(int argc, char* argv[])
                 hotkey_code = argv[++ii];
             }
         } else if ((strcmp(argv[ii], "1") == 0) || (strcmp(argv[ii], "-1") == 0) || (strcmp(argv[ii], "-k") == 0)) {
-            if (ii + 1 < argc) { 
+            if (ii + 1 < argc) {
                 kill_mode = true;
                 AppToKill = argv[++ii];
             }
         } else if ((strcmp(argv[ii], "-sudokill") == 0)) {
-            if (ii + 1 < argc) { 
+            if (ii + 1 < argc) {
                 kill_mode = true;
                 sudo_kill = true;
                 AppToKill = argv[++ii];
@@ -217,7 +217,7 @@ int main(int argc, char* argv[])
                 }
             }
         } else if ((strcmp(argv[ii], "-joystick") == 0)) {
-            if (ii + 1 < argc) { 
+            if (ii + 1 < argc) {
                 joystick_index = atoi(argv[++ii]);
             }
         }
@@ -234,7 +234,7 @@ int main(int argc, char* argv[])
             if (strcmp(env_textinput_extrasymbols,"Y") == 0) {
                 textinputinteractive_extrasymbols = true;
             }
-        }    
+        }
     }
 
 
@@ -245,7 +245,7 @@ int main(int argc, char* argv[])
     }
 
     // Create fake input device (not needed in kill mode)
-    //if (!kill_mode) {  
+    //if (!kill_mode) {
     if (config_mode || xbox360_mode || textinputinteractive_mode) { // initialise device, even in kill mode, now that kill mode will work with config & xbox modes
         uinp_fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
         if (uinp_fd < 0) {
@@ -278,7 +278,7 @@ int main(int argc, char* argv[])
                     printf("text input preset is not set\n");
                     //textinputpreset_mode = false;   removed so that Enter key can be pressed
                 }
-            } 
+            }
         }
                         // if we are in textinputinteractive mode, initialise the character set
         if (textinputinteractive_mode) {
@@ -288,7 +288,7 @@ int main(int argc, char* argv[])
                 printf("interactive text input mode without auto-capitals\n");
             if (textinputinteractive_extrasymbols)
                 printf("interactive text input mode includes extra symbols\n");
-        
+
         }
         // Create input device into input sub-system
         write(uinp_fd, &uidev, sizeof(uidev));

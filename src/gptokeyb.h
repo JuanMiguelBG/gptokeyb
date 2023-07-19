@@ -18,21 +18,21 @@
 * Authored by: Kris Henriksen <krishenriksen.work@gmail.com>
 #
 * AnberPorts-Keyboard-Mouse
-* 
+*
 * Part of the code is from from https://github.com/krishenriksen/AnberPorts/blob/master/AnberPorts-Keyboard-Mouse/main.c (mostly the fake keyboard)
 * Fake Xbox code from: https://github.com/Emanem/js2xbox
-* 
+*
 * Modified (badly) by: Shanti Gilbert for EmuELEC
 * Modified further by: Nikolai Wuttke for EmuELEC (Added support for SDL and the SDLGameControllerdb.txt)
 * Modified further by: Jacob Smith
-* 
+*
 * Any help improving this code would be greatly appreciated! 
-* 
+*
 * DONE: Xbox360 mode: Fix triggers so that they report from 0 to 255 like real Xbox triggers
 *       Xbox360 mode: Figure out why the axis are not correctly labeled?  SDL_CONTROLLER_AXIS_RIGHTX / SDL_CONTROLLER_AXIS_RIGHTY / SDL_CONTROLLER_AXIS_TRIGGERLEFT / SDL_CONTROLLER_AXIS_TRIGGERRIGHT
 *       Keyboard mode: Add a config file option to load mappings from.
 *       add L2/R2 triggers
-* 
+*
 */
 
 #ifndef __GPTOKEYB_H__
@@ -118,7 +118,7 @@ extern bool sudo_kill;      //allow sudo kill instead of killall for non-emuelec
 extern bool pckill_mode;    //emit alt+f4 to close apps on pc during kill mode, if env variable is set
 extern bool openbor_mode;
 extern bool xbox360_mode;
-extern bool textinputpreset_mode; 
+extern bool textinputpreset_mode;
 extern bool textinputinteractive_mode;
 extern bool textinputinteractive_noautocapitals;
 extern bool textinputinteractive_extrasymbols;
@@ -137,7 +137,7 @@ extern const int maxChars;                  // length of text in characters that
 extern int character_set[];                 // keys that can be selected in text input interactive mode
 extern bool character_set_shift[];          // indicate which keys require shift
 
-extern int current_character; 
+extern int current_character;
 extern int current_key[];                   // current key selected for each key
 
 extern int joystick_index;                  // joystick index for player 1, default 0
