@@ -66,15 +66,20 @@ bool handleInputEvent(const SDL_Event& event)
         break;
 
     case SDL_CONTROLLERDEVICEADDED:
-        if (event.cdevice.which == joystick_index && (xbox360_mode == true || config_mode == true)) {
-            SDL_GameControllerOpen(joystick_index);
+        if (xbox360_mode == true || config_mode == true) {
+            if (event.cdevice.which == joystick_index) {
+                //SDL_GameControllerOpen(joystick_index);
 
-            // SDL_GameController* controller = SDL_GameControllerOpen(0);
-            // if (controller) {
-            //     const char *name = SDL_GameControllerNameForIndex(0);
-            //     printf("Joystick %i has game controller name '%s'\n", 0, name);
-            // }
-
+                SDL_GameController* controller = SDL_GameControllerOpen(joystick_index);//SDL_GameControllerOpen(0);
+                if (controller) {
+                    //const char *name = SDL_GameControllerNameForIndex(joystick_index);
+                    const char *name = SDL_GameControllerName(controller);
+                    char guid[40];
+                    SDL_Joystick* joy = SDL_GameControllerGetJoystick(controller);
+                    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), guid, 40);
+                    printf("Joystick with index %i, has game controller name '%s' and GUID '%s'\n", joystick_index, name, guid);
+                }
+            }
         } else {
             SDL_GameControllerOpen(event.cdevice.which);
         }
