@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
     const char* config_file = nullptr;
 
     config_mode = true;
-    config_file = "/emuelec/configs/gptokeyb/default.gptk";
+    config_file = DEFAULT_CONFIG_FILE;
 
     // Add hotkey environment variable if available
     if (char* env_hotkey = SDL_getenv("HOTKEY")) {
@@ -195,7 +195,7 @@ int main(int argc, char* argv[])
                 config_file = argv[++ii];
             } else {
                 config_mode = true;
-                config_file = "/emuelec/configs/gptokeyb/default.gptk";
+                config_file = DEFAULT_CONFIG_FILE;
             }
         } else if (strcmp(argv[ii], "-hotkey") == 0) {
             if (ii + 1 < argc) {

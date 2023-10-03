@@ -59,6 +59,7 @@
 #define CONFIG_ARG_MAX_BYTES 128
 #define SDL_DEFAULT_REPEAT_DELAY 500
 #define SDL_DEFAULT_REPEAT_INTERVAL 30
+#define DEFAULT_CONFIG_FILE "/home/ark/.config/gptokeyb_default.gptk"
 
 #include "structs.h"
 
